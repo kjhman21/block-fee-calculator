@@ -6,6 +6,8 @@ const mintedKLAY = caver.utils.convertToPeb('9.6', 'KLAY')
 
 async function getBlockFee(startBlockNumber, endBlockNumber) {
     console.log('blockNumber,gasReward(peb),ToBeBurnt(peb),gasReward(KLAY),ToBeBurnt(KLAY)')
+    var totalReward = caver.utils.toBN(0)
+    var totalToBeBurnt = caver.utils.toBN(0)
     for(var i = startBlockNumber; i <= endBlockNumber; i++) {
         const b = await caver.rpc.klay.getBlockByNumber(i)
         const gasPrice = await caver.rpc.klay.getGasPriceAt(i)
@@ -14,8 +16,16 @@ async function getBlockFee(startBlockNumber, endBlockNumber) {
         const toBeBurnt = gasReward.sub(gasRewartAt25ston)
         const gasRewardInKLAY = caver.utils.convertFromPeb(gasReward)
         const toBeBurntInKLAY = caver.utils.convertFromPeb(toBeBurnt)
+
+        totalReward = totalReward.add(gasReward)
+        totalToBeBurnt = totalToBeBurnt.add(toBeBurnt)
         console.log(`${i},${gasReward.toString()},${toBeBurnt.toString()},${gasRewardInKLAY},${toBeBurntInKLAY}`)
     }
+
+    const totalRewardInKLAY = caver.utils.convertFromPeb(totalReward)
+    const totalToBeBurntInKLAY = caver.utils.convertFromPeb(totalToBeBurnt)
+    console.log(`Total Reward = ${totalReward.toString()}, ${totalRewardInKLAY} KLAY`)
+    console.log(`Total KLAY to be burnt = ${totalToBeBurnt.toString()}, ${totalRewardInKLAY} KLAY`)
 }
 
 
