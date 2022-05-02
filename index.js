@@ -25,7 +25,7 @@ async function getBlockFee(startBlockNumber, endBlockNumber) {
     const totalRewardInKLAY = caver.utils.convertFromPeb(totalReward)
     const totalToBeBurntInKLAY = caver.utils.convertFromPeb(totalToBeBurnt)
     console.log(`Total Reward = ${totalReward.toString()}, ${totalRewardInKLAY} KLAY`)
-    console.log(`Total KLAY to be burnt = ${totalToBeBurnt.toString()}, ${totalRewardInKLAY} KLAY`)
+    console.log(`Total KLAY to be burnt = ${totalToBeBurnt.toString()}, ${totalToBeBurntInKLAY} KLAY`)
 }
 
 
